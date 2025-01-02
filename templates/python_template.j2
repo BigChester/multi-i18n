@@ -1,0 +1,8 @@
+translations = {
+{% for key, value in translations.items() %}
+    '{{ key }}': '{{ value }}',
+{% endfor %}
+}
+
+def translate(key: str) -> str:
+    return translations.get(key, None)

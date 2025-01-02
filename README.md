@@ -22,6 +22,27 @@ Multi-language contents are stored in **YAML** files. Each YAML file correspond 
 
 ## Install & Run the Script
 
+### Environment Required
+
+- Python>=3.9.6
+- Others see [requirements.txt](./requirements.txt)
+
+### Generate Code
+
+Generate all support programming language:
+
+```bash
+python3 main.py --yaml-dir ./translations --output-dir ./generated
+```
+
+Generate specified programming language:
+
+```bash
+python3 main.py --yaml-dir ./translations --output-dir ./generated --languages c
+```
+
+## API
+
 ...
 
 ## Reference

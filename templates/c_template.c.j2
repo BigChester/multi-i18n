@@ -1,0 +1,20 @@
+#include "translations.h"
+#include <string.h>
+
+static const struct {
+    const char* key;
+    const char* value;
+} translations[] = {
+{% for key, value in translations.items() %}
+    { "{{ key }}", "{{ value }}" },
+{% endfor %}
+};
+
+const char* translate(const char* key) {
+    for (size_t i = 0; i < sizeof(translations) / sizeof(translations[0]); i++) {
+        if (strcmp(translations[i].key, key) == 0) {
+            return translations[i].value;
+        }
+    }
+    return NULL;
+}
