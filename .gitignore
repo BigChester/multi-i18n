@@ -31,5 +31,13 @@
 *.out
 *.app
 
+# Log
+log/
+
+# Test
+.pytest_cache/
+__pycache__/
+.coverage
+
 # Python Venv
 .venv/
