@@ -26,10 +26,11 @@ static const multi_i18n_language_t {{ language_pack_name|lower|replace('-', '_')
 
 {%- endfor %}
 
-const multi_i18n_language_pack_t multi_i18n_language_packs[] = {
+const multi_i18n_language_pack_t multi_i18n_language_pack[] = {
 {%- for language_pack_name, language_pack in language_packs.items() %}
     &{{ language_pack_name|lower|replace('-', '_') }}_lang,
 {%- endfor %}
+    NULL
 };
 
 static const multi_i18n_language_pack_t* current_language_pack = NULL;
@@ -59,11 +60,11 @@ multi_i18n_status_t multi_i18n_set_locale(const char* locale) {
     return MULTI_I18N_FAIL;
 }
 
-static const char* _multi_i18n_get_text_core(multi_i18n_phrase_t* trans, const char* msg_id) {
+static const char* _multi_i18n_get_text_core(const multi_i18n_phrase_t* trans, const char* msg_id) {
     if (!trans || !msg_id) {
         return msg_id;
     }
-    for (multi_i18n_phrase_t* phrase = trans; phrase->msg_id; phrase++) {
+    for (const multi_i18n_phrase_t* phrase = trans; phrase->msg_id; phrase++) {
         if (strcmp(phrase->msg_id, msg_id) == 0) {
             return phrase->translation;
         }

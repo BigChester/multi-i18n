@@ -31,6 +31,12 @@
 *.out
 *.app
 
+# Build
+build/
+
+# Config
+.vscode/
+
 # Log
 log/
 
