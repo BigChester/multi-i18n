@@ -1,20 +1,113 @@
-#include "translations.h"
-#include <string.h>
+#include "multi_i18n.h"
 
-static const struct {
-    const char* key;
-    const char* value;
-} translations[] = {
-{% for key, value in translations.items() %}
+{%- for language_pack_name, language_pack in language_packs.items() %}
+
+static const multi_i18n_phrase_t {{ language_pack_name|lower|replace('-', '_') }}_singulars[] = {
+{%- for key, value in language_pack.singulars.items() %}
     { "{{ key }}", "{{ value }}" },
-{% endfor %}
+{%- endfor %}
 };
 
-const char* translate(const char* key) {
-    for (size_t i = 0; i < sizeof(translations) / sizeof(translations[0]); i++) {
-        if (strcmp(translations[i].key, key) == 0) {
-            return translations[i].value;
+static const multi_i18n_phrase_t {{ language_pack_name|lower|replace('-', '_') }}_options[][MAX_OPTION_COUNT] = {
+{%- for key, values in language_pack.options.items() %}
+    {
+    {%- for value in values %}
+        { "{{ key }}", "{{ value }}" },
+    {%- endfor %}
+    },
+{%- endfor %}
+};
+
+static const multi_i18n_language_t {{ language_pack_name|lower|replace('-', '_') }}_lang = {
+    .locale = "{{ language_pack_name }}",
+    .singulars = {{ language_pack_name|lower|replace('-', '_') }}_singulars,
+    .options = {{ language_pack_name|lower|replace('-', '_') }}_options,
+};
+
+{%- endfor %}
+
+const multi_i18n_language_pack_t multi_i18n_language_packs[] = {
+{%- for language_pack_name, language_pack in language_packs.items() %}
+    &{{ language_pack_name|lower|replace('-', '_') }}_lang,
+{%- endfor %}
+};
+
+static const multi_i18n_language_pack_t* current_language_pack = NULL;
+static const multi_i18n_language_t* current_language = NULL;
+
+multi_i18n_status_t multi_i18n_init(const multi_i18n_language_pack_t* language_pack) {
+    if (!language_pack || !*language_pack) {
+        return MULTI_I18N_FAIL;
+    }
+
+    current_language_pack = language_pack;
+    current_language = *language_pack; // Set default language
+    return MULTI_I18N_SUCCESS;
+}
+
+multi_i18n_status_t multi_i18n_set_locale(const char* locale) {
+    if (!current_language_pack || !locale) {
+        return MULTI_I18N_FAIL;
+    }
+
+    for (const multi_i18n_language_t* lang = *current_language_pack; lang->locale; lang++) {
+        if (strcmp(lang->locale, locale) == 0) {
+            current_language = lang;
+            return MULTI_I18N_SUCCESS;
         }
     }
-    return NULL;
+    return MULTI_I18N_FAIL;
+}
+
+static const char* _multi_i18n_get_text_core(multi_i18n_phrase_t* trans, const char* msg_id) {
+    if (!trans || !msg_id) {
+        return msg_id;
+    }
+    for (multi_i18n_phrase_t* phrase = trans; phrase->msg_id; phrase++) {
+        if (strcmp(phrase->msg_id, msg_id) == 0) {
+            return phrase->translation;
+        }
+    }
+    return msg_id;
+}
+
+const char* multi_i18n_get_text(const char* msg_id) {
+    if (!current_language || !msg_id) {
+        return msg_id;
+    }
+
+    if (current_language->singulars) {
+        return _multi_i18n_get_text_core(current_language->singulars, msg_id);
+    }
+
+    return msg_id;
+}
+
+const char* multi_i18n_get_option_text(const char* msg_id, size_t idx) {
+    if (!current_language || !msg_id || !current_language->options) {
+        return msg_id;
+    }
+
+    const multi_i18n_phrase_t (*option_list)[MAX_OPTION_COUNT] = 
+        (const multi_i18n_phrase_t (*)[MAX_OPTION_COUNT])current_language->options;
+    
+    for (size_t i = 0; option_list[i][0].msg_id != NULL; i++) {
+        if (strcmp(option_list[i][0].msg_id, msg_id) == 0) {
+            size_t option_index = (idx < MAX_OPTION_COUNT) ? idx : 0;
+            if (option_list[i][option_index].translation) {
+                return option_list[i][option_index].translation;
+            }
+            break;
+        }
+    }
+    return msg_id;
+}
+
+const char* multi_i18n_get_current_locale(void) {
+    return current_language ? current_language->locale : NULL;
+}
+
+void __multi_i18n_reset(void) {
+    current_language_pack = NULL;
+    current_language = NULL;
 }
