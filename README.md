@@ -45,6 +45,14 @@ python3 main.py --yaml-dir ./translations --output-dir ./generated --languages c
 
 ...
 
+## Contribution
+
+If you have any suggestions or improvements, please make sure to create a new issue or pull request.
+
+And test the code before submitting.
+
+See [test](./tests/test.md) for more test information.
+
 ## Reference
 
 - [*GNU gettext*](https://www.gnu.org/software/gettext/)
