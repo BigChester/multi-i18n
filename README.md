@@ -8,7 +8,7 @@ This repo generates API files for multiple programming languages based on YAML f
 
 Multi-language contents are stored in **YAML** files. Each YAML file correspond to one language, such as en-GB, zh-CH.
 
-### 2. Core Librar
+### 2. Core Library
 
 - Use **Strategy** pattern to design this module
 - Yaml parser
@@ -46,5 +46,6 @@ python3 main.py --yaml-dir ./translations --output-dir ./generated --languages c
 ...
 
 ## Reference
+
 - [*GNU gettext*](https://www.gnu.org/software/gettext/)
 - [*lv_i18n - Internationalization for LittlevGL*](https://github.com/lvgl/lv_i18n)
