@@ -1,6 +1,77 @@
-#ifndef TRANSLATIONS_H
-#define TRANSLATIONS_H
+#ifndef MULTI_I18N_H
+#define MULTI_I18N_H
 
-const char* translate(const char* key);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif // TRANSLATIONS_H
+#include <string.h>
+
+#define MAX_OPTION_COUNT 100  // Support up to 100 options per key
+
+typedef enum {
+    MULTI_I18N_FAIL = 0,
+    MULTI_I18N_SUCCESS = 1,
+} multi_i18n_status_t;
+
+typedef struct {
+    const char* msg_id;
+    const char* translation;
+} multi_i18n_phrase_t;
+
+typedef struct {
+    const char* locale;
+    multi_i18n_phrase_t* singulars;
+    const multi_i18n_phrase_t (*options)[MAX_OPTION_COUNT];
+} multi_i18n_language_t;
+
+/* Null-terminated list of languages. First element is the default language. */
+typedef const multi_i18n_language_t* multi_i18n_language_pack_t;
+
+extern const multi_i18n_language_pack_t multi_i18n_language_pack[];
+
+/**
+ * @brief Initialize the multi-language library.
+ * @param[in] language_pack The language pack to initialize.
+ * @return 1 on success, 0 on failure.
+ */
+multi_i18n_status_t multi_i18n_init(const multi_i18n_language_pack_t* language_pack);
+
+/**
+ * @brief Set the locale.
+ * @param[in] locale The locale to set. Example: "en-GB", "zh-CN".
+ * @return 1 on success, 0 on failure.
+ */
+multi_i18n_status_t multi_i18n_set_locale(const char* locale);
+
+/**
+ * @brief Get the text of the message.
+ * @param[in] msg_id The message id.
+ * @return The translated text of `msg_id` on the current locale.
+ */
+const char* multi_i18n_get_text(const char *msg_id);
+
+/**
+ * @brief Get the option text of the message.
+ * @param[in] msg_id The message id.
+ * @param[in] idx The index of the option to select.
+ * @return The selected option text of `msg_id` on the current locale.
+ */
+const char* multi_i18n_get_option_text(const char *msg_id, size_t idx);
+
+/**
+ * @brief Get the current locale.
+ * @return The current locale. Example: "en-GB", "zh-CN".
+ */
+const char* multi_i18n_get_current_locale(void);
+
+void __multi_i18n_reset(void);
+
+#define _(text) multi_i18n_get_text(text)
+#define _o(text, idx) multi_i18n_get_option_text(text, idx)
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // MULTI_I18N_H
