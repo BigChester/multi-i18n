@@ -1,30 +1,13 @@
 import pytest
 from pathlib import Path
 import yaml
-import logging
 import os
 from utils.yaml_loader import load_yaml_files
-
-def setup_logging(log_dir):
-    # Create log directory
-    log_dir = Path(log_dir)
-    log_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Configure logging
-    log_file = log_dir / "test_yaml_loader.log"
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file, encoding='utf-8'),
-            logging.StreamHandler()  # Output to console
-        ]
-    )
-    return logging.getLogger(__name__)
+from utils.Logger import logger_setup
 
 def test_load_yaml_files(tmp_path):
     # Set logging to log folder
-    logger = setup_logging("log")
+    logger = logger_setup("tests")
     
     # Set test output directory to log/test_output
     test_dir = Path("log/test_output/translations")
@@ -32,7 +15,6 @@ def test_load_yaml_files(tmp_path):
     
     # Log path information
     logger.info(f"Test directory path: {test_dir}")
-    logger.info(f"Test directory exists: {test_dir.exists()}")
     
     # Create test data with lists
     test_data = {
@@ -60,7 +42,6 @@ def test_load_yaml_files(tmp_path):
         
         # Verify file
         logger.info(f"File exists: {yaml_file.exists()}")
-        logger.info(f"File absolute path: {yaml_file.absolute()}")
         
         assert yaml_file.exists()
         
