@@ -5,16 +5,18 @@ name: Pytest
 
 on:
   push:
-    branches: [ "master" ]
-    branches: [ "develop" ]
+    branches:
+      - master
+      - develop
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 permissions:
   contents: read
 
 jobs:
-  Pytes-API-Testing:
+  Pytest:
 
     runs-on: ubuntu-latest
 
