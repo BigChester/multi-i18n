@@ -1,23 +1,13 @@
 import pytest
-import logging
 from pathlib import Path
 from generators.c_generator import CGenerator
+from utils.Logger import logger_setup
 
 # Configure logging
-log_dir = Path("log")
-log_dir.mkdir(exist_ok=True)
-test_output_dir = log_dir / "test_output" / "output"
+test_output_dir = Path("./log/test_output/output")
 test_output_dir.mkdir(parents=True, exist_ok=True)
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(log_dir / "test_c_generator.log", encoding='utf-8'),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
+logger = logger_setup("tests")
 
 @pytest.fixture
 def generator():
