@@ -24,7 +24,7 @@ python -m pytest -v tests/test_manager.py
 
 ## Test multi_i18n.c & multi_i18n.h
 
-run build.sh or build.bat
+run test.sh or test.bat
 
 ### Test Environment Requirement
 
