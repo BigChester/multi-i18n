@@ -47,3 +47,10 @@ __pycache__/
 
 # Python Venv
 .venv/
+
+# Installer
+dist/
+
+# Output
+generated/
+output/
