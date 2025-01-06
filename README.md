@@ -10,9 +10,9 @@ Multi-language contents are stored in **YAML** files. Each YAML file correspond 
 
 ### 2. Core Library
 
-- Use **Strategy** pattern to design this module
+- Use **Strategy** pattern && **Simple Factory** pattern to design this module
 - Yaml parser
-- Lanugage store
+- Language store
 - Language manager
 
 ### 3. API Generator
@@ -43,7 +43,7 @@ python3 main.py --yaml-dir ./translations --output-dir ./generated --languages c
 
 ## API
 
-...
+- [C](./API/C.md)
 
 ## Contribution
 
