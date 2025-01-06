@@ -32,13 +32,13 @@ Multi-language contents are stored in **YAML** files. Each YAML file correspond 
 Generate all support programming language:
 
 ```bash
-python3 main.py --yaml-dir ./translations --output-dir ./generated
+./dist/multi_i18n.exe main.py --yaml-dir ./translations --output-dir ./generated
 ```
 
 Generate specified programming language:
 
 ```bash
-python3 main.py --yaml-dir ./translations --output-dir ./generated --languages c
+./dist/multi_i18n.exe --yaml-dir ./translations --output-dir ./generated --languages c
 ```
 
 ## API
