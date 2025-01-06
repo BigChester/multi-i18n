@@ -22,6 +22,12 @@ python -m pytest -v tests/test_c_generator.py
 python -m pytest -v tests/test_manager.py
 ```
 
+## Test Main
+
+```bash
+python -m pytest -v tests/test_main.py
+```
+
 ## Test multi_i18n.c & multi_i18n.h
 
 run test.sh or test.bat
