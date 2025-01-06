@@ -16,6 +16,12 @@ python -m pytest -v tests/test_yaml_loader.py
 python -m pytest -v tests/test_c_generator.py
 ```
 
+## Test Manager
+
+```bash
+python -m pytest -v tests/test_manager.py
+```
+
 ## Test multi_i18n.c & multi_i18n.h
 
 run build.sh or build.bat

@@ -51,6 +51,9 @@ class CGenerator(LanguageGenerator):
         
         # 处理翻译数据
         language_packs = self._process_language_pack(translations)
+
+        # Create output directory if it doesn't exist
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
         
         # 生成头文件
         header_template = env.get_template("c_template.h.j2")
