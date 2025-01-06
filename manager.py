@@ -1,6 +1,6 @@
 from typing import Dict, List
 from generators.base import LanguageGenerator
-# from generators.python_generator import PythonGenerator
+from generators.python_generator import PythonGenerator
 from generators.c_generator import CGenerator
 from utils.yaml_loader import load_yaml_files
 
@@ -11,11 +11,19 @@ class GeneratorManager:
         self._register_default_generators()
     
     def _register_default_generators(self) -> None:
-        self.register_generator("c", CGenerator())
+        self.register_generator("c")
     
-    def register_generator(self, language: str,
-                           generator: LanguageGenerator) -> None:
-        self._generators[language] = generator
+    def register_generator(self, language: str) -> None:
+
+        generator_map = {
+            "c": CGenerator,
+            "python": PythonGenerator,
+        }
+        
+        if language in generator_map:
+            self._generators[language] = generator_map[language]()
+        else:
+            raise ValueError(f"Unsupported language type: {language}")
     
     def get_supported_languages(self) -> List[str]:
         return list(self._generators.keys())

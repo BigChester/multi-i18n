@@ -18,16 +18,3 @@ def logger_setup(log_name: str, log_level=logging.DEBUG):
     )
 
     return logging.getLogger(log_name)
-
-# def main():
-#     print(" ===== Start to test logger =====")
-#     logger = logger_setup("logger_test")
-#     logger.debug("Test 0")
-#     logger.info("Test 1")
-#     logger.warning("Test 2")
-#     logger.fatal("Test 3")
-#     logger.error("Test 4")
-#     print(" ===== End to test logger =====")
-
-# if __name__ == "__main__":
-#     main()

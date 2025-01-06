@@ -16,11 +16,8 @@ class TestGeneratorManager:
         assert "c" in supported
         
     def test_register_generator(self, manager):
-        # Create mock generator
-        mock_generator = Mock(spec=LanguageGenerator)
-        
         # Register new generator
-        manager.register_generator("python", mock_generator)
+        manager.register_generator("python")
         
         # Validate if it's registered correctly
         supported = manager.get_supported_languages()
@@ -28,18 +25,18 @@ class TestGeneratorManager:
         assert "c" in supported
         
     def test_generate_with_valid_language(self, manager):
-        # Create mock generator
+        # Mock the C generator
         mock_generator = Mock(spec=LanguageGenerator)
-        manager.register_generator("test", mock_generator)
+        manager._generators["c"] = mock_generator
         
         # Test data
         translations = {"key": "value"}
         output_dir = "/tmp/output"
         
         # Execute generation
-        manager.generate("test", translations, output_dir)
+        manager.generate("c", translations, output_dir)
         
-        # Validate if the generator was called correctly
+        # Verify the generator was called with correct arguments
         mock_generator.generate.assert_called_once_with(translations, output_dir)
         
     def test_generate_with_invalid_language(self, manager, capsys):
