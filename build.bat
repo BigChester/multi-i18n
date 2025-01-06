@@ -5,8 +5,8 @@ set PATH=D:\Program Files\mingw64\bin;D:\Program Files\cmake-3.30.2-windows-x86_
 
 REM Check if output directory exists
 if not exist "log\test_output\output" (
-    echo 错误：源文件目录不存在！
-    echo 请确保 log\test_output\output 目录中包含生成的 .c 和 .h 文件
+    echo Error: Source file directory does not exist!
+    echo Please ensure that the log\test_output\output directory contains the generated .c and .h files
     exit /b 1
 )
 
