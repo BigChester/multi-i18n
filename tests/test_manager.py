@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from manager import GeneratorManager
 from generators.base import LanguageGenerator
 from pathlib import Path
+from utils.yaml_loader import load_yaml_files
 
 class TestGeneratorManager:
     @pytest.fixture
@@ -36,14 +37,14 @@ class TestGeneratorManager:
         output_dir = "/tmp/output"
         
         # Execute generation
-        manager.generate(["test"], translations, output_dir)
+        manager.generate("test", translations, output_dir)
         
         # Validate if the generator was called correctly
         mock_generator.generate.assert_called_once_with(translations, output_dir)
         
     def test_generate_with_invalid_language(self, manager, capsys):
         # Test using an unsupported language
-        manager.generate(["invalid"], {}, "/tmp/output")
+        manager.generate("invalid", {}, "/tmp/output")
         
         # Capture output and validate warning message
         captured = capsys.readouterr()
@@ -54,8 +55,11 @@ class TestGeneratorManager:
         yaml_dir = Path("log/test_output/translations")
         output_dir = Path("log/test_output/output")
         
+        # Get translations
+        translations = load_yaml_files(yaml_dir)
+
         # Execute generation
-        manager.generate_from_yaml(["c"], yaml_dir, output_dir)
+        manager.generate("c", translations, output_dir)
         
         # Validate generated files
         assert (output_dir / "multi_i18n.h").exists()
