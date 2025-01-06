@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader
 from .base import LanguageGenerator
 
 class PythonGenerator(LanguageGenerator):
-    """使用 Jinja2 模板生成 Python 代码的生成器"""
+    """Python code generator using Jinja2 template"""
     
     def generate(self, translations: Dict[str, str], output_dir: str) -> None:
         env = Environment(loader=FileSystemLoader("templates"))
