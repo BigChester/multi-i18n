@@ -61,3 +61,6 @@ See [test](./tests/test.md) for more test information.
 
 - [*GNU gettext*](https://www.gnu.org/software/gettext/)
 - [*lv_i18n - Internationalization for LittlevGL*](https://github.com/lvgl/lv_i18n)
+
+## License
+The scripts and documentation in this project are released under the [Apache License](./LICENSE)
