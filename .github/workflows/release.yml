@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download production artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: multi_i18n
           path: dist/multi_i18n
@@ -48,15 +48,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0
-          release_name: multi_i18n v1.0.0
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           body: |
             ## multi_i18n v1.0.0
             - Support multi-language code generation
             - Only support C language code generation
             - Support Windows, Linux and macOS
             - Tested on Windows 10, macOS Sequoia 
-          draft: false
+          draft: true
           prerelease: false
 
       - name: Upload artifacts to GitHub Releases
