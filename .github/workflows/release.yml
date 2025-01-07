@@ -37,6 +37,8 @@ jobs:
     needs: Build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Download production artifacts
         uses: actions/download-artifact@v4
         with:
@@ -68,6 +70,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_path: build/
-          asset_name: build-artifacts.zip
+          asset_path: dist/multi_i18n
+          asset_name: multi_i18n.zip
           asset_content_type: application/zip
