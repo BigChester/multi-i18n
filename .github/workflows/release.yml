@@ -28,7 +28,7 @@ jobs:
           pyinstaller multi_i18n.spec
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: multi_i18n
           path: dist/multi_i18n
