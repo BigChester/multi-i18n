@@ -43,19 +43,23 @@ jobs:
           name: multi_i18n
           path: dist/multi_i18n
 
+      - name: Load Release Config
+        id: release_config
+        run: |
+          echo "version=$(python3 -c 'import yaml; print(yaml.safe_load(open("release-config.yml"))["version"])')" >> $GITHUB_OUTPUT
+          echo "name=$(python3 -c 'import yaml; print(yaml.safe_load(open("release-config.yml"))["name"])')" >> $GITHUB_OUTPUT
+          echo "description<<EOF" >> $GITHUB_OUTPUT
+          python3 -c 'import yaml; print(yaml.safe_load(open("release-config.yml"))["description"])' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            ## multi_i18n v1.0.0
-            - Support multi-language code generation
-            - Only support C language code generation
-            - Support Windows, Linux and macOS
-            - Tested on Windows 10, macOS Sequoia 
+          tag_name: ${{ steps.release_config.outputs.version }}
+          release_name: Release ${{ steps.release_config.outputs.name }}
+          body: ${{ steps.release_config.outputs.description }}
           draft: true
           prerelease: false
 
@@ -64,7 +68,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/
           asset_name: build-artifacts.zip
           asset_content_type: application/zip
