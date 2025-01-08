@@ -29,9 +29,9 @@ jobs:
 
       - name: Copy production to artifacts
         run: |
-          if [ ${{ matrix.os }} == "windows-latest" ]; then
+          if ( ${{ matrix.os }} == "windows-latest" ); then
             robocopy templates dist /E /MIR
-          elif [ ${{ matrix.os }} == "macos-latest" ]; then
+          elif ( ${{ matrix.os }} == "macos-latest" ); then
             cp -R templates/ dist/
           else
             cp -r templates/ dist/
