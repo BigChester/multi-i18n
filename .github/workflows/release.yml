@@ -55,21 +55,10 @@ jobs:
       - name: Download production artifacts
         uses: actions/download-artifact@v4
         with:
-          path: my-artifact
-          pattern: my-artifact-*
+          path: artifact
+          pattern: artifact-*
           merge-multiple: true
-      - run: ls -R my-artifact
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: false
+      - run: ls -R artifact
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -78,8 +67,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          name: Release ${{ github.ref }}
           files: |
-            my-artifact/artifact*
+            artifact/artifact*
           draft: true
           prerelease: false
