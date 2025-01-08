@@ -31,6 +31,8 @@ jobs:
         run: |
           if [ ${{ matrix.os }} == "windows-latest" ]; then
             xcopy templates dist\ /E /I /Y
+          elif [ ${{ matrix.os }} == "macos-latest" ]; then
+            cp -R templates/ dist/
           else
             cp -r templates/ dist/
           fi
@@ -63,6 +65,18 @@ jobs:
           pattern: artifact-*
       - run: ls -R artifact
 
+      - name: Archive production artifacts
+        run: |
+          cd artifact
+          for dir in artifact-*-multi_i18n-*; do
+            if [[ $dir == *"windows-latest"* ]]; then
+              zip -r "${dir}.zip" "$dir"
+            else
+              tar -czf "${dir}.tar.gz" "$dir"
+            fi
+          done
+          cd ..
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
@@ -72,6 +86,7 @@ jobs:
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref }}
           files: |
-            artifact/artifact*
+            artifact/artifact-*-multi_i18n-*.zip
+            artifact/artifact-*-multi_i18n-*.tar.gz
           draft: true
           prerelease: false
