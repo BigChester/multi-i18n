@@ -29,7 +29,11 @@ jobs:
 
       - name: Archive production artifacts
         run: |
-          cp -r templates/ dist/
+          if [ ${{ matrix.os }} == "windows-latest" ]; then
+            xcopy templates dist\ /E /I /Y
+          else
+            cp -r templates/ dist/
+          fi
           cp README.md LICENSE dist/
 
       - name: Get version
@@ -57,7 +61,6 @@ jobs:
         with:
           path: artifact
           pattern: artifact-*
-          merge-multiple: true
       - run: ls -R artifact
 
       - name: Create GitHub Release
