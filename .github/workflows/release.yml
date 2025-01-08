@@ -6,7 +6,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -27,7 +27,7 @@ jobs:
         run: |
           pyinstaller multi_i18n.spec
 
-      - name: Archive production artifacts
+      - name: Copy production to artifacts
         run: |
           if [ ${{ matrix.os }} == "windows-latest" ]; then
             xcopy templates dist\ /E /I /Y
@@ -88,5 +88,5 @@ jobs:
           files: |
             artifact/artifact-*-multi_i18n-*.zip
             artifact/artifact-*-multi_i18n-*.tar.gz
-          draft: true
+          draft: false
           prerelease: false
