@@ -47,7 +47,7 @@ Generate specified programming language:
 
 ## TODO
 
-- [ ] Add relative path have some bugs
+- [ ] Adding relative path has some bugs
 
 ## Contribution
 
@@ -63,4 +63,5 @@ See [test](./tests/test.md) for more test information.
 - [*lv_i18n - Internationalization for LittlevGL*](https://github.com/lvgl/lv_i18n)
 
 ## License
+
 The scripts and documentation in this project are released under the [Apache License](./LICENSE)
