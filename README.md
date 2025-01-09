@@ -48,6 +48,8 @@ Generate specified programming language:
 ## TODO
 
 - [ ] Adding relative path has some bugs
+- [ ] Support counting the number of strings
+- [ ] Support generating code for Python
 
 ## Contribution
 
