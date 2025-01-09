@@ -6,7 +6,7 @@ jobs:
   Build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -29,13 +29,7 @@ jobs:
 
       - name: Copy production to artifacts
         run: |
-          if ( ${{ matrix.os }} == "windows-latest" ); then
-            robocopy templates dist /E /MIR
-          elif ( ${{ matrix.os }} == "macos-latest" ); then
-            cp -R templates/ dist/
-          else
-            cp -r templates/ dist/
-          fi
+          cp -r templates/ dist/
           cp README.md LICENSE dist/
 
       - name: Get version
@@ -69,11 +63,7 @@ jobs:
         run: |
           cd artifact
           for dir in artifact-*-multi_i18n-*; do
-            if [[ $dir == *"windows-latest"* ]]; then
-              zip -r "${dir}.zip" "$dir"
-            else
-              tar -czf "${dir}.tar.gz" "$dir"
-            fi
+            tar -czf "${dir}.tar.gz" "$dir"
           done
           cd ..
 
@@ -86,7 +76,6 @@ jobs:
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref }}
           files: |
-            artifact/artifact-*-multi_i18n-*.zip
             artifact/artifact-*-multi_i18n-*.tar.gz
           draft: false
           prerelease: false
