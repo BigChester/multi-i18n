@@ -47,7 +47,6 @@ Generate specified programming language:
 
 ## TODO
 
-- [ ] Scan all YML files in the direct folders and generate only one src file from all YML srcs
 - [ ] Adding relative path has some bugs
 - [ ] Support counting the number of strings
 - [ ] Support generating code for Python
