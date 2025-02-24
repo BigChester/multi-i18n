@@ -54,3 +54,8 @@ dist/
 # Output
 generated/
 output/
+
+# Translations
+translations/
+
+run.bat
