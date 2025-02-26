@@ -1,8 +1,7 @@
-version: v1.0.0
-name: multi_i18n v1.0.0
+version: V1.1.0
+name: multi_i18n V1.1.0
 description: |
-    ## multi_i18n v1.0.0
-    - Support multi-language code generation
-    - Only support C language code generation
-    - Support Windows, Linux and macOS
-    - Tested on Windows 10, macOS Sequoia 
+    ## multi_i18n V1.1.0
+
+    ### Added
+    - Scan all YML files in the specified directories and generate a single source file from all YML sources

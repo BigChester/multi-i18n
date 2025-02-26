@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [Unreleased]
+## [1.1.0] - 2025-02-26
 
 ### Added
 
-- Scan all YML files in the direct folders and generate only one src file from all YML srcs.
+- Scan all YML files in the specified directories and generate a single source file from all YML sources
 
 ## [1.0.0] - 2025-01-09
 
